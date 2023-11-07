@@ -1,0 +1,18 @@
+start 100
+mover ax 05
+mover bx 10
+up: add ax bx
+movem a ='5'
+mult ax a
+origin up
+ltorg
+movem b ='8'
+movem c ='8'
+ltorg
+movem b ='7'
+movem c ='8'
+ds a 02
+dc b 10
+ds c 09
+next equ up
+end

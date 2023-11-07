@@ -1,0 +1,53 @@
+package com.code4;
+
+import java.util.Scanner;
+
+public class NextFitMemoryAllocation {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.print("Enter the number of memory blocks: ");
+		int numBlocks = scanner.nextInt();
+
+		int[] memorySizes = new int[numBlocks];
+
+		System.out.println("Enter the sizes of memory blocks:");
+		for (int i = 0; i < numBlocks; i++) {
+			memorySizes[i] = scanner.nextInt();
+		}
+
+		System.out.print("Enter the number of processes: ");
+		int numProcesses = scanner.nextInt();
+
+		int[] processSizes = new int[numProcesses];
+		boolean[] allocated = new boolean[numBlocks];
+		int lastAllocatedBlock = 0;
+
+		System.out.println("Enter the sizes of processes:");
+		for (int i = 0; i < numProcesses; i++) {
+			processSizes[i] = scanner.nextInt();
+		}
+
+		for (int i = 0; i < numProcesses; i++) {
+			int nextFitBlock = -1;
+
+			for (int j = 0; j < numBlocks; j++) {
+				int blockIndex = (lastAllocatedBlock + j) % numBlocks;
+				if (!allocated[blockIndex] && memorySizes[blockIndex] >= processSizes[i]) {
+					nextFitBlock = blockIndex;
+					break;
+				}
+			}
+
+			if (nextFitBlock != -1) {
+				allocated[nextFitBlock] = true;
+				lastAllocatedBlock = nextFitBlock;
+				System.out.println("Process " + i + " allocated to Memory Block " + nextFitBlock);
+			} else {
+				System.out.println("Process " + i + " cannot be allocated");
+			}
+		}
+
+		scanner.close();
+	}
+}

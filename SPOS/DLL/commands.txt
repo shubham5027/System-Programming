@@ -1,0 +1,8 @@
+javac B1.java
+
+javah -classpath.B1
+
+gcc -shared -fPIC -I/usr/lib/jvm/default-java/include-I/usr/lib/jvm/default-java/include/linux B1.c -o libB1.so
+
+
+java -classpath.-Djava.library.path=.B1

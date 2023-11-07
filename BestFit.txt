@@ -1,0 +1,55 @@
+package com.code4;
+
+import java.util.Scanner;
+
+public class BestFitMemoryAllocation {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of memory blocks: ");
+        int numBlocks = scanner.nextInt();
+
+        int[] memorySizes = new int[numBlocks];
+
+        System.out.println("Enter the sizes of memory blocks:");
+        for (int i = 0; i < numBlocks; i++) {
+            memorySizes[i] = scanner.nextInt();
+        }
+
+        System.out.print("Enter the number of processes: ");
+        int numProcesses = scanner.nextInt();
+
+        int[] processSizes = new int[numProcesses];
+        boolean[] allocated = new boolean[numBlocks];
+
+        System.out.println("Enter the sizes of processes:");
+        for (int i = 0; i < numProcesses; i++) {
+            processSizes[i] = scanner.nextInt();
+        }
+
+        for (int i = 0; i < numProcesses; i++) {
+            int bestFitBlock = -1;
+            int bestFitSize = Integer.MAX_VALUE;
+
+            for (int j = 0; j < numBlocks; j++) {
+                if (!allocated[j] && memorySizes[j] >= processSizes[i]) {
+                    if (memorySizes[j] < bestFitSize) {
+                        bestFitSize = memorySizes[j];
+                        bestFitBlock = j;
+                    }
+                }
+            }
+
+            if (bestFitBlock != -1) {
+                allocated[bestFitBlock] = true;
+                System.out.println("Process " + i + " allocated to Memory Block " + bestFitBlock);
+            } else {
+                System.out.println("Process " + i + " cannot be allocated");
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
